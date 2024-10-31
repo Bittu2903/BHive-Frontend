@@ -36,3 +36,49 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+
+/* styles.css */
+
+body {
+  background: linear-gradient(135deg, #f0f4f8, #e1e9ee);
+  min-height: 100vh;
+}
+
+.card-glass {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 20px;
+  margin: 20px;
+}
+
+.card-content {
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 1rem;
+}
+
+.custom-label {
+  color: #4a4a4a; /* Change this color to your preference */
+  font-weight: bold; /* Optional: make it bold */
+}
+
+
+/* src/components/FundDetails.css */
+.fund-details {
+  color: #333; /* Default color for the text */
+}
+
+.fund-title {
+  color: #4A90E2; /* Color for the fund title */
+}
+
+.label {
+  color: #4A90E2; /* Color for the labels */
+}
