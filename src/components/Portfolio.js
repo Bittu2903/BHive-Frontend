@@ -1,18 +1,17 @@
-// src/components/Portfolio.js
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useAlert } from '../context/AlertContext'; // Import alert context
+import { useAlert } from '../context/AlertContext';
 
 const Portfolio = () => {
     const { portfolio, sellFund } = useAuth();
-    const { showAlert } = useAlert(); // Use alert context
+    const { showAlert } = useAlert();
 
     const handleSell = (fund) => {
         try {
-            sellFund(fund); // Attempt to sell the fund
-            showAlert(`Successfully sold ${fund.Scheme_Name}.`, 'success'); // Show success alert
+            sellFund(fund);
+            showAlert(`Successfully sold ${fund.Scheme_Name}.`, 'success');
         } catch (error) {
-            showAlert(`Failed to sell ${fund.Scheme_Name}.`, 'error'); // Show error alert
+            showAlert(`Failed to sell ${fund.Scheme_Name}.`, 'error');
         }
     };
 

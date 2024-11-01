@@ -1,13 +1,12 @@
-// src/components/FundDetails.js
 import React from 'react';
-import { useAlert } from '../context/AlertContext'; // Import alert context
+import { useAlert } from '../context/AlertContext';
 
 const FundDetails = ({ fund, onBack }) => {
-    const { showAlert } = useAlert(); // Use alert context
+    const { showAlert } = useAlert();
 
     if (!fund) {
-        showAlert('No fund details available.', 'error'); // Show alert if fund is not provided
-        return null; // Return null to avoid rendering empty details
+        showAlert('No fund details available.', 'error');
+        return null;
     }
 
     return (

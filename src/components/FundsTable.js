@@ -1,21 +1,44 @@
-// src/components/FundsTable.js
 import React from 'react';
-import { useAuth } from '../context/AuthContext'; // Import the Auth context
-import { useAlert } from '../context/AlertContext'; // Import the Alert context
+import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import { useAlert } from '../context/AlertContext';
+import config from '../config/config';
 
 const FundsTable = ({ funds, onSelectFund }) => {
-    const { addToPortfolio, portfolio } = useAuth(); // Get addToPortfolio and portfolio from context
-    const { showAlert } = useAlert(); // Get showAlert from Alert context
+    const { addToPortfolio, portfolio } = useAuth();
+    const { showAlert } = useAlert();
 
-    const handleBuy = (fund) => {
-        // Check if the fund is already in the portfolio
+    const handleBuy = async (fund) => {
         const isFundInPortfolio = portfolio.some(item => item.Scheme_Code === fund.Scheme_Code);
         if (isFundInPortfolio) {
-            showAlert(`The fund ${fund.Scheme_Name} is already in your portfolio!`, 'error'); // Alert if fund exists
+            showAlert(`The fund ${fund.Scheme_Name} is already in your portfolio!`, 'error');
             return;
         }
-        addToPortfolio(fund); // Add fund to portfolio when clicked
-        showAlert(`Added ${fund.Scheme_Name} to your portfolio!`, 'success'); // Alert on successful addition
+
+        const token = localStorage.getItem('token');
+        try {
+            const response = await axios.post(`${config.BASE}/funds/purchase`, {
+                schemeCode: fund.Scheme_Code,
+                schemeName: fund.Scheme_Name,
+                amount: 1000
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.status === 200) {
+                addToPortfolio(fund);
+                showAlert(`Added ${fund.Scheme_Name} to your portfolio!`, 'success');
+                
+                const purchasedFunds = JSON.parse(localStorage.getItem('purchasedFunds')) || [];
+                purchasedFunds.push(fund);
+                localStorage.setItem('purchasedFunds', JSON.stringify(purchasedFunds));
+            }
+        } catch (error) {
+            console.error('Error purchasing fund:', error);
+            showAlert('Error purchasing fund. Please try again.', 'error');
+        }
     };
 
     return (

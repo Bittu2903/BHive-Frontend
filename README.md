@@ -1,6 +1,20 @@
-# Getting Started with Create React App
+# Mutual Fund Dashboard
+
+This project is a frontend application built with React that interacts with a backend API to manage mutual fund data.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Table of Contents
+- [Available Scripts](#available-scripts)
+- [Prerequisites](#prerequisites)
+- [Clone the Repository](#clone-the-repository)
+- [Install Packages](#install-packages)
+- [Running the Project](#running-the-project)
+- [Testing the Project](#testing-the-project)
+- [Environment Variables](#environment-variables)
+- [API Documentation](#api-documentation)
 
 ## Available Scripts
 
@@ -24,10 +38,8 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
+The build is minified, and the filenames include the hashes.\
 Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `npm run eject`
 
@@ -35,36 +47,73 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Prerequisites
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Before you begin, ensure you have the following installed:
+- Node.js (version 14 or higher)
+- npm (Node package manager)
 
-## Learn More
+## Clone the Repository
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To get started, clone the repository to your local machine using the following command:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+git clone https://github.com/yourusername/your-repo-name.git
+```
 
-### Code Splitting
+Change into the project directory:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+cd your-repo-name
+```
 
-### Analyzing the Bundle Size
+## Install Packages
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Once you have cloned the repository, install the required packages using:
 
-### Making a Progressive Web App
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Running the Project
 
-### Advanced Configuration
+To run the React application, use the following command:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm start
+```
 
-### Deployment
+This will start the app in development mode, and you can view it at [http://localhost:3000](http://localhost:3000).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Testing the Project
 
-### `npm run build` fails to minify
+To run the tests for the project, use the following command:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+npm test
+```
+
+This will execute all tests and display the results in the terminal.
+
+## Environment Variables
+
+Make sure to set the necessary environment variables for your application. You can create a `.env` file in the project root with the following structure:
+
+```
+REACT_APP_DUMMY_USERNAME=bhive_user
+REACT_APP_DUMMY_PASSWORD=bhive_backend_secret_password
+REACT_APP_RAPIDAPI_KEY=14deeb8a7bmsh8b823ba7d593207p11a9bajsnf0682742e2a8 (Replace with your API KEY)
+```
+
+## API Documentation
+
+The API documentation for the backend service can be found at:
+
+```
+http://localhost:8005/docs
+```
+
+### Getting API Key
+
+To access mutual fund data, you need an API key from [RapidAPI](https://rapidapi.com/suneetk92/api/latest-mutual-fund-nav). Sign up for an account and subscribe to the API to get your key.
+

@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
@@ -45,9 +44,9 @@ const Nav = () => {
 
     const handleLogout = async () => {
         setLoading(true);
-        await new Promise(resolve => setTimeout(resolve, 500)); // Simulate async logout
-        logout(); // Call logout from context
-        window.location.href = '/'; // Redirect to login page after logout
+        await new Promise(resolve => setTimeout(resolve, 500));
+        logout();
+        window.location.href = '/';
     };
 
     return (

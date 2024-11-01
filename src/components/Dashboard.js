@@ -1,14 +1,14 @@
-// src/components/Dashboard.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import FundsTable from './FundsTable'; // Import the table component
-import FundDetails from './FundDetails'; // Import the details component
-import { useAlert } from '../context/AlertContext'; // Import alert context
+import FundsTable from './FundsTable';
+import FundDetails from './FundDetails';
+import { useAlert } from '../context/AlertContext';
+import config from '../config/config';
 
 const Dashboard = () => {
     const [funds, setFunds] = useState([]);
     const [selectedFamily, setSelectedFamily] = useState('');
-    const [selectedFund, setSelectedFund] = useState(null); // State for selected fund details
+    const [selectedFund, setSelectedFund] = useState(null);
     const [mutualFundFamilies] = useState([
         'Bandhan Mutual Fund',
         'Tata Mutual Fund',
@@ -17,40 +17,40 @@ const Dashboard = () => {
         'LIC Mutual Fund'
     ]);
     
-    const { showAlert } = useAlert(); // Use alert context
+    const { showAlert } = useAlert();
 
     const fetchFunds = async (family) => {
         const token = localStorage.getItem('token');
         try {
-            const response = await axios.get(`http://localhost:8005/funds/latest/${family}`, {
+            const response = await axios.get(`${config.BASE}/funds/latest/${family}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
             setFunds(response.data);
-            showAlert('Funds fetched successfully!', 'success'); // Show success alert
+            showAlert('Funds fetched successfully!', 'success');
         } catch (error) {
             console.error('Error fetching funds:', error);
-            showAlert('Error fetching funds. Please try again.', 'error'); // Show error alert
+            showAlert('Error fetching funds. Please try again.', 'error');
         }
     };
 
     const handleFamilyChange = (e) => {
         setSelectedFamily(e.target.value);
-        setSelectedFund(null); // Reset selected fund when changing family
+        setSelectedFund(null);
         if (e.target.value) {
             fetchFunds(e.target.value);
         } else {
-            setFunds([]); // Clear funds if no family is selected
+            setFunds([]);
         }
     };
 
     const handleFundSelect = (fund) => {
-        setSelectedFund(fund); // Set selected fund for details view
+        setSelectedFund(fund);
     };
 
     const handleBackToList = () => {
-        setSelectedFund(null); // Go back to the list view
+        setSelectedFund(null);
     };
 
     return (
@@ -70,11 +70,9 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {/* Show fund details if a fund is selected */}
             {selectedFund ? (
                 <FundDetails fund={selectedFund} onBack={handleBackToList} />
             ) : (
-                // Render the FundsTable component if there are funds
                 funds.length > 0 && <FundsTable funds={funds} onSelectFund={handleFundSelect} />
             )}
         </div>
