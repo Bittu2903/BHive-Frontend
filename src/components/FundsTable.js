@@ -5,7 +5,7 @@ import { useAlert } from '../context/AlertContext';
 import config from '../config/config';
 
 const FundsTable = ({ funds, onSelectFund }) => {
-    const { addToPortfolio, portfolio } = useAuth();
+    const { portfolio, addToPortfolio } = useAuth();
     const { showAlert } = useAlert();
 
     const handleBuy = async (fund) => {
@@ -16,11 +16,12 @@ const FundsTable = ({ funds, onSelectFund }) => {
         }
 
         const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('user_id');
         try {
-            const response = await axios.post(`${config.BASE}/funds/purchase`, {
+            const response = await axios.post(`${config.BASE}/funds/${userId}/purchase`, {
                 schemeCode: fund.Scheme_Code,
                 schemeName: fund.Scheme_Name,
-                amount: 1000
+                amount: 100
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -28,12 +29,8 @@ const FundsTable = ({ funds, onSelectFund }) => {
             });
 
             if (response.status === 200) {
-                addToPortfolio(fund);
+                addToPortfolio(response.data);
                 showAlert(`Added ${fund.Scheme_Name} to your portfolio!`, 'success');
-                
-                const purchasedFunds = JSON.parse(localStorage.getItem('purchasedFunds')) || [];
-                purchasedFunds.push(fund);
-                localStorage.setItem('purchasedFunds', JSON.stringify(purchasedFunds));
             }
         } catch (error) {
             console.error('Error purchasing fund:', error);
