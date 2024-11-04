@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
+import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Portfolio from './components/Portfolio';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -16,6 +17,7 @@ const App = () => {
                     <div className="container mt-5">
                         <Routes>
                             <Route path="/" element={<Login />} />
+                            <Route path="/signup" element={<Signup />} />
                             <Route path="/dashboard" element={<PrivateRoute component={Dashboard} />} />
                             <Route path="/portfolio" element={<PrivateRoute component={Portfolio} />} />
                         </Routes>
@@ -70,7 +72,10 @@ const Nav = () => {
                             <a className="navbar-item" href="/portfolio">Portfolio</a>
                         </>
                     ) : (
-                        <a className="navbar-item" href="/">Login</a>
+                        <>
+                            <a className="navbar-item" href="/">Login</a>
+                            <a className="navbar-item" href="/signup">Signup</a>
+                        </>
                     )}
                     <a className="navbar-item" href="/dashboard">Dashboard</a>
                 </div>

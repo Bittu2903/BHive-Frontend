@@ -1,49 +1,39 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { useAlert } from '../context/AlertContext';
 import config from '../config/config';
 
-const Login = () => {
+const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { login } = useAuth();
     const { showAlert } = useAlert();
 
-    const handleLogin = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
-        setLoading(true);
         try {
-            const response = await axios.post(`${config.BASE}/auth/login`, {
-                username,
-                password
+            await axios.post(`${config.BASE}/auth/signup`, {
+                username: username,
+                password: password
             }, {
                 headers: { 'Content-Type': 'application/json' }
             });
-            console.log(response.data);
-            const { token, expire_at, user_id } = response.data;
-            login(token, username, user_id);
-            localStorage.setItem('expire_at', expire_at);
-            showAlert('Login successful!', 'success');
-            navigate('/dashboard');
+            showAlert('Signup successful! You can now log in.', 'success');
+            navigate('/');
         } catch (error) {
-            console.error('Login failed:', error.response?.data || error.message);
-            const errorMessage = error.response?.data?.detail || 'Login failed. Please try again.';
+            console.error('Signup failed:', error.response?.data || error.message);
+            const errorMessage = error.response?.data?.detail || 'Signup failed. Please try again.';
             showAlert(errorMessage, 'error');
-        } finally {
-            setLoading(false); 
         }
     };
 
     return (
         <div className="container">
-            <h1 className="title has-text-centered">Login</h1>
+            <h1 className="title has-text-centered">Signup</h1>
             <div className="columns is-centered">
                 <div className="column is-half">
-                    <form onSubmit={handleLogin} className="box card-glass">
+                    <form onSubmit={handleSignup} className="box card-glass">
                         <div className="field">
                             <label className="custom-label label">Username</label>
                             <div className="control">
@@ -71,9 +61,7 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="control">
-                            <button type="submit" className="button is-primary is-fullwidth" disabled={loading}>
-                                {loading ? 'Logging in...' : 'Login'}
-                            </button>
+                            <button type="submit" className="button is-primary is-fullwidth">Signup</button>
                         </div>
                     </form>
                 </div>
@@ -82,4 +70,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;

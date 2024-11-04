@@ -1,15 +1,14 @@
-// src/context/AlertContext.js
 import React, { createContext, useContext, useState } from 'react';
 
 const AlertContext = createContext();
 
 export const AlertProvider = ({ children }) => {
-    const [alert, setAlert] = useState({ message: '', type: '' }); // Initialize with default values
+    const [alert, setAlert] = useState({ message: '', type: '' });
 
     const showAlert = (message, type = 'info') => {
         setAlert({ message, type });
         setTimeout(() => {
-            setAlert({ message: '', type: '' }); // Clear the alert after 3 seconds
+            setAlert({ message: '', type: '' });
         }, 3000);
     };
 

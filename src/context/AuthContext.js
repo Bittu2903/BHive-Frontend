@@ -1,4 +1,3 @@
-// src/context/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -9,22 +8,36 @@ export const AuthProvider = ({ children }) => {
         const storedPortfolio = localStorage.getItem('portfolio');
         return storedPortfolio ? JSON.parse(storedPortfolio) : [];
     });
+    const [username, setUsername] = useState(() => {
+        return localStorage.getItem('username') || null;
+    });
+    const [userId, setUserId] = useState(() => {
+        return localStorage.getItem('user_id') || null;
+    });
 
     useEffect(() => {
         localStorage.setItem('portfolio', JSON.stringify(portfolio));
     }, [portfolio]);
 
-    const login = (token) => {
+    const login = (token, username, userId) => {
         localStorage.setItem('token', token);
+        localStorage.setItem('username', username);
+        localStorage.setItem('user_id', userId);
+        setUsername(username);
+        setUserId(userId);
         setIsAuthenticated(true);
     };
 
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('user_id');
         localStorage.removeItem('expire_at');
-        setIsAuthenticated(false);
-        setPortfolio([]); // Clear portfolio on logout
         localStorage.removeItem('portfolio');
+        setIsAuthenticated(false);
+        setUsername(null);
+        setUserId(null);
+        setPortfolio([]);
     };
 
     const addToPortfolio = (fund) => {
@@ -33,12 +46,22 @@ export const AuthProvider = ({ children }) => {
 
     const sellFund = (fundToSell) => {
         setPortfolio((prevPortfolio) =>
-            prevPortfolio.filter(fund => fund.Scheme_Code !== fundToSell.Scheme_Code)
+            prevPortfolio.filter(fund => fund.scheme_code !== fundToSell.scheme_code) 
         );
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout, portfolio, addToPortfolio, sellFund }}>
+        <AuthContext.Provider value={{
+            isAuthenticated,
+            username,
+            userId,
+            login,
+            logout,
+            portfolio,
+            setPortfolio,
+            addToPortfolio,
+            sellFund
+        }}>
             {children}
         </AuthContext.Provider>
     );
